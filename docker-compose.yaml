@@ -1,0 +1,20 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:13
+    container_name: sequalize-auth
+    env_file:
+      - .env
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+  posgres_test:
+    image: postgres:13
+    container_name: sequalize-auth-test
+    env_file:
+      - .env.test
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5433:5432"
