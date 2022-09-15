@@ -12,13 +12,18 @@ export function registerModels(sequelize) {
   const filteredModelFiles = modelFiles.filter((file) => file !== thisFile && file.slice(-3) === '.js');
 
   for (const file of filteredModelFiles) {
-    //get the default exported Model from that Model file
+    //Import the Models from their respective files in this dir and populate the models obj with them
     const model = require(path.join(__dirname, file)).default(sequelize);
     //Add it to the models obj
     models[model.name] = model;
   }
 
-  //Register associations of the models
+  //Register associations of the models (by executing the static associate() method for each Model)
+  Object.keys(models).forEach((modelName) => {
+    if (models[modelName].associate) {
+      models[modelName].associate(models);
+    }
+  });
 
   models.sequelize = sequelize;
 }
