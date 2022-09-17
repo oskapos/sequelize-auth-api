@@ -21,7 +21,7 @@ class TestsHelpers {
 
   static getApp() {
     //Importing the App late so that the models are populated by now
-    const App = require('../src/app').default;
+    const App = require('../../src/app').default;
     return new App().getApp();
   }
 }

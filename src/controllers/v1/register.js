@@ -30,10 +30,17 @@ router.post(
       //Create The user Roles
       if (roles && Array.isArray(roles)) {
         const rolesToSave = [];
-        roles.forEach(async (role) => {
+        //Here a promise is returned in each loop => forEach won't work here
+        // roles.forEach(async (role) => {
+        //   const newRole = await Role.create({ role });
+        //   rolesToSave.push(newRole);
+        // });
+
+        //We either use a regular for loop or Promise.all( )
+        for (const role of roles) {
           const newRole = await Role.create({ role });
           rolesToSave.push(newRole);
-        });
+        }
         //associate the roles created with the user (Sequelize Method)
         await newUser.addRoles(rolesToSave);
       }
