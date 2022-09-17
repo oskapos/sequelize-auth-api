@@ -1,6 +1,7 @@
 import '../../src/config';
 import Database from '../../src/database';
 import dbConfig from '../../src/config/database';
+import request from 'supertest';
 
 let db;
 
@@ -23,6 +24,11 @@ class TestsHelpers {
     //Importing the App late so that the models are populated by now
     const App = require('../../src/app').default;
     return new App().getApp();
+  }
+
+  static async registerNewUser(options = {}) {
+    const { email = 'test@example.com', password = 'Test123#', endpoint = '/v1/register' } = options;
+    return request(TestsHelpers.getApp()).post(endpoint).send({ email, password });
   }
 }
 

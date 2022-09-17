@@ -4,7 +4,7 @@ import JWTUtils from '../../utils/jwt-utils';
 import runAsyncWrapper from '../../utils/runAsyncWrapper';
 
 const router = Router();
-const { User, Role, sequelize } = models;
+const { User } = models;
 
 router.post(
   '/login',
