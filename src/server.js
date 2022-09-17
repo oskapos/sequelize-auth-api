@@ -10,7 +10,8 @@ import dbConfig from './config/database';
     const db = new Database(environment.nodeEnv, dbConfig);
     await db.connect();
 
-    //Import the App and set up the server
+    //We're Importing the App after connecting to DB so that the models are populated by now
+    //Set up the server
     const App = require('./app').default;
     const app = new App();
     app.listen();

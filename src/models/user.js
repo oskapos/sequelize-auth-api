@@ -39,7 +39,7 @@ export default (sequelize) => {
         type: DataTypes.STRING(50),
         unique: true,
       },
-      firstNmae: {
+      firstName: {
         type: DataTypes.STRING(50),
         validate: {
           len: {
