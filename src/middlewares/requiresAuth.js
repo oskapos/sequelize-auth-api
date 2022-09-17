@@ -1,5 +1,6 @@
 import JWTUtils from '../utils/jwt-utils';
 
+//This middleware verifys the token wether it is access or refresh
 function requiresAuth(tokenType = 'accessToken') {
   return function (req, res, next) {
     const authHeader = req.headers.authorization;
