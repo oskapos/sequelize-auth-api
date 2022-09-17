@@ -17,8 +17,8 @@ router.post(
   runAsyncWrapper(async (req, res) => {
     //the refreshToken the user provided
     const { jwt } = req.body;
-    //the refresh token in our Database
-    const user = User.findOne({ where: { email: jwt.email }, include: RefreshToken });
+    //the refresh token in our Database (we can access the email on the decoded token (the paylaod))
+    const user = await User.findOne({ where: { email: jwt.email }, include: RefreshToken });
     const savedToken = user.RefreshToken;
 
     //Check if refresh token also exist and valid in the Db (it might not be after a long time visiting for example )
