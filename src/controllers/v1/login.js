@@ -34,8 +34,8 @@ router.post(
         await user.createRefreshToken({ token: refreshToken });
       } else {
         // 2) ==> Set it with the newly created one
-        user.refreshToken.token = refreshToken;
-        await user.RefreshToken.save();
+        savedRefreshToken.token = refreshToken;
+        await savedRefreshToken.save();
       }
       //There is a valid refreshToken for this user and it is not null ==> use it
     } else {

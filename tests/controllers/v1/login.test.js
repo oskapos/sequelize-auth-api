@@ -58,4 +58,26 @@ describe('login', () => {
       .expect(200);
     expect(response.body.data.refreshToken).toEqual(newUserResponse.body.data.refreshToken);
   });
+
+  it("should create new refresh token record if there isn't one associated with the user", async () => {
+    const { RefreshToken } = models;
+    await RefreshToken.destroy({ where: {} });
+    let refreshToken = await RefreshToken.findAll();
+    expect(refreshToken.length).toEqual(0);
+    await request(app).post('/v1/login').send({ email: 'test@example.com', password: 'Test123#' }).expect(200);
+    refreshToken = await RefreshToken.findAll();
+    expect(refreshToken.length).toEqual(1);
+    expect(refreshToken[0].token).not.toBeNull();
+  });
+
+  it('should set token field to a JWT if this field is empty', async () => {
+    const { RefreshToken } = models;
+    const refreshToken = newUserResponse.body.data.refreshToken;
+    const savedRefreshToken = await RefreshToken.findOne({ where: { token: refreshToken } });
+    savedRefreshToken.token = null;
+    await savedRefreshToken.save();
+    await request(app).post('/v1/login').send({ email: 'test@example.com', password: 'Test123#' }).expect(200);
+    await savedRefreshToken.reload();
+    expect(savedRefreshToken.token).not.toBeNull();
+  });
 });
