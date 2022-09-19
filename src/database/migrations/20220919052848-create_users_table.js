@@ -30,7 +30,6 @@ module.exports = {
           },
           username: {
             type: Sequelize.STRING(50),
-            allowNull: false,
             unique: true,
           },
           firstName: {
