@@ -15,7 +15,6 @@ router.post(
   //verify the refresh token
   requiresAuth('refreshToken'),
   runAsyncWrapper(async (req, res) => {
-    //the refreshToken the user provided
     const { jwt } = req.body;
     //the refresh token in our Database (we can access the email on the decoded token (the paylaod))
     const user = await User.findOne({ where: { email: jwt.email }, include: RefreshToken });
